@@ -8,6 +8,26 @@
 using namespace std;
 #define CAL "\nEnter the calculator operation you want to do: "
 
+void addition();
+void subtraction();
+void multiplication();
+void division();
+int remainder();
+void modulus();
+void power();
+int  factorial();
+int  logarithm();
+int  roots();
+int  squareroot();
+void calculation_operation();
+void fibonacci();
+void palindrome();
+void strong();
+void armstrong();
+void prime();
+void trigo();
+void expo();
+
 int main(){
     int x=1;
     char operation;
