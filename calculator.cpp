@@ -3,7 +3,8 @@
 #include<iomanip>
 #include<math.h>
 #include<algorithm>
-#include<string.h>
+#include<string>
+#include<bits/stdc++.h>
 
 using namespace std;
 #define CAL "\nEnter the calculator operation you want to do: "
@@ -27,6 +28,20 @@ void armstrong();
 void prime();
 void trigo();
 void expo();
+void ExpressionConversion();
+void infixcon();
+void prefixcon();
+void postfixcon();
+void infixtopostfix();
+void infixtoprefix();
+void prefixtoinfix();
+void prefixtopostfix();
+void postfixtoinfix();
+void postfixtoprefix();
+void expevaluation();
+void infixeval();
+void prefixeval();
+void postfixeval();
 
 int main(){
     int x=1;
@@ -81,14 +96,23 @@ int main(){
 			        break;
 					
 			case 'e': expo();
-			        break;				           
+			        break;
+
+            case 'w': ExpressionConversion();
+                    break;
+
+            case 'v': expevaluation();
+                    break;				           
 							               
             case 'q': exit(0);
-                      break;
+                    break;
+
+            case 'l': logarithm();
+                    break;
                 
             case 'c': system("cls");
                       calculation_operation();
-                      break;
+                    break;
  
             default : system("cls");
             cout<<"You have Entered unavailable option. Please enter from the option below...."<<endl;
@@ -100,7 +124,6 @@ int main(){
 void calculation_operation(){
 cout<<"Welcome to the calculator"<<endl;
 cout<<"Press 'q' to quit"<<endl;
-cout<<"Press 'h' to show the below options"<<endl;
 cout<<"Press 'c' to clear the screen and display the available option"<<endl;
 cout<<"1. Press '+' for Addition"<<endl;
 cout<<"2. Press '-' for Subtraction"<<endl;
@@ -118,7 +141,9 @@ cout<<"13. Press 'a' for Armstrong number"<<endl;
 cout<<"14. Press 'z' for Armstrong verification"<<endl;
 cout<<"15. Press 'o' for Trignometric function"<<endl;
 cout<<"16. Press 'e' for Exponential"<<endl;
-cout<<"17. Press 'L' for Logarithm"<<endl;
+cout<<"17. Press 'l' for Logarithm"<<endl;
+cout<<"18. Press 'w' for Expression Conversion"<<endl;
+cout<<"19. Press 'v' for Expression Evaluation"<<endl;
 }
 
 void addition(){
@@ -380,4 +405,472 @@ void expo(){
     cin>>x;
     result=exp(x);
     cout<<fixed<<"Exponential of "<<setprecision(2)<<x<<" is: "<<setprecision(2)<<result<<endl;
+}
+
+bool isopr(char x)
+{
+    switch (x) {
+    case '+':
+    case '-':
+    case '/':
+    case '*':
+    case '^':
+        return true;
+    }
+    return false;
+}
+
+int getPriority(char C)
+{
+    if (C == '-' || C == '+')
+        return 1;
+    else if (C == '*' || C == '/')
+        return 2;
+    else if (C == '^')
+        return 3;
+    return 0;
+}
+
+void ExpressionConversion(){
+    string exp;
+        cout<<"Choose the type of Expression:\n1.Infix\n2.Prefix\n3.Postfix"<<endl;
+        int a;
+        cin>>a;
+        switch(a){
+            case 1: infixcon();
+            break;
+            case 2: prefixcon();
+            break;
+            case 3: postfixcon();
+            break;
+            default: cout<<"Please choose a valid option"<<endl;
+            ExpressionConversion();
+        }
+    
+}
+
+void infixcon(){
+    cout<<"Please Enter the type of Conversion:\n1.Prefix\n2.Postfix"<<endl;
+    int b;
+    cin>>b;
+    switch(b){
+        case 1: infixtoprefix();
+                break;
+        case 2: infixtopostfix();
+                break;
+        default : cout<<"Please Enter a Valid Option"<<endl;
+        infixcon();
+    }
+}
+
+void infixtoprefix(){
+    cout<<"Enter Infix Expression"<<endl;
+    string infix;
+    getline(cin>>ws,infix);
+    stack<char> opr;
+    stack<string> operand;
+    int size = infix.size();
+    for(int i=0;i<size;i++){
+        if(infix[i]=='('){
+            opr.push(infix[i]);
+        }
+        else if(infix[i]==')'){
+            while(!opr.empty() && opr.top()!='('){
+                string op1=operand.top();
+                operand.pop();
+                string op2=operand.top();
+                operand.pop();
+
+                char op = opr.top();
+                opr.pop();
+
+                string temp= op+op2+op1;
+                operand.push(temp);
+            }
+            opr.pop();
+        }
+        else if(!isopr(infix[i])){
+            operand.push(string(1,infix[i]));
+        }
+
+        else{
+            while(!opr.empty() && getPriority(infix[i])<= getPriority(opr.top())){
+                string op1 = operand.top();
+                operand.pop();
+                string op2 = operand.top();
+                operand.pop();
+
+                char op = opr.top();
+                opr.pop();
+
+                string temp = op+op2+op1;
+                operand.push(temp);
+            }
+            opr.push(infix[i]);
+        }
+    }
+   while(!opr.empty()){
+        string op1 = operand.top();
+        operand.pop();
+        string op2 = operand.top();
+        operand.pop();
+
+        char op = opr.top();
+        opr.pop();
+
+        string temp = op+op2+op1;
+        operand.push(temp);
+    }
+    cout<<"Required Prefix Expression: "<<operand.top()<<endl;
+}
+
+void infixtopostfix(){
+    cout<<"Enter Infix Expression:"<<endl;
+    string infix;
+    getline(cin>>ws,infix);
+    stack<char> opr;
+    //stack<string> operand;
+    string postfix;
+    int size = infix.length();
+    for(int i=0;i<size;i++){
+        if(infix[i]=='('){
+            opr.push(infix[i]);
+        }
+        else if(infix[i]==')'){
+            while(!opr.empty() && opr.top()!='('){
+                
+                postfix+= opr.top();
+                opr.pop();
+            }
+            opr.pop();
+        }
+        else if(!isopr(infix[i])){
+            postfix+=infix[i];
+        }
+
+        else{
+            while(!opr.empty() && getPriority(infix[i])<=getPriority(opr.top())){
+                //if(infix[i]=='^' && opr.top()=='^')break;
+                
+                    postfix += opr.top();
+                    opr.pop();
+                
+            }
+            opr.push(infix[i]);
+        }
+    }
+    while(!opr.empty()){
+        postfix+=opr.top();
+        opr.pop();
+    }
+    cout<<"Required Postfix Expression: "<<postfix<<endl;
+}
+
+void prefixcon(){
+    cout<<"Please Enter the type of Conversion:\n1.Infix\n2.Postfix"<<endl;
+    int b;
+    cin>>b;
+    switch(b){
+        case 1: prefixtoinfix();
+                break;
+        case 2: prefixtopostfix();
+                break;
+        default : cout<<"Please Enter a Valid Option"<<endl;
+        prefixcon();
+    }
+}
+void prefixtoinfix(){
+    cout<<"Enter the Prefix Expression: "<<endl;
+    string prefix;
+    cin>>prefix;
+    stack<string>st;
+    int size = prefix.size();
+    for(int i=size-1;i>=0;i--){
+        if(isopr(prefix[i])){
+            string op1 =st.top();
+            st.pop();
+            string op2 =st.top();
+            st.pop();
+
+            string temp = "("+op1+prefix[i]+op2+")";
+            st.push(temp);
+        }
+        else {
+            st.push(string(1,prefix[i]));
+        }
+    }
+    cout<<"Required Infix Operation is:"<<st.top()<<endl;
+
+}
+void prefixtopostfix(){
+    cout<<"Enter the Prefix Expression: "<<endl;
+    string prefix;
+    cin>>prefix;
+    stack<string>st;
+    int size = prefix.size();
+    for(int i=size-1;i>=0;i--){
+        if(isopr(prefix[i])){
+            string op1 = st.top();
+            st.pop();
+            string op2 = st.top();
+            st.pop();
+
+            string temp = op1+op2+prefix[i];
+
+            st.push(temp);
+        }
+        else{
+            st.push(string(1,prefix[i]));
+        }
+    }
+    cout<<"Required Postfix Expression: "<<st.top()<<endl;
+}
+
+void postfixcon(){
+    cout<<"Please Enter the type of Conversion:\n1.Prefix\n2.Infix"<<endl;
+    int b;
+    cin>>b;
+    switch(b){
+        case 1: postfixtoprefix();
+                break;
+        case 2: postfixtoinfix();
+                break;
+        default : cout<<"Please Enter a Valid Option"<<endl;
+        infixcon();
+    }
+}
+void postfixtoinfix(){
+    cout<<"Enter the Postfix Expression: "<<endl;
+    string postfix;
+    cin>>postfix;
+    stack<string>st;
+    int size = postfix.size();
+
+    for(int i=0;i<size;i++){
+        if(!isopr(postfix[i])){
+            st.push(string(1,postfix[i]));
+        }
+        else{
+            string op1 = st.top();
+            st.pop();
+            string op2= st.top();
+            st.pop();
+            st.push("("+op2+postfix[i]+op1+")");
+        }
+    }
+    cout<<"Required Infix Expression: "<<st.top()<<endl;
+}
+void postfixtoprefix(){
+    cout<<"Enter Postfix Expression: "<<endl;
+    string postfix;
+    cin>>postfix;
+    int size=postfix.size();
+    stack<string>st;
+
+    for(int i=0;i<size;i++){
+        if(!isopr(postfix[i])){
+            st.push(string(1,postfix[i]));
+        }
+        else{
+            string op1=st.top();
+            st.pop();
+            string op2=st.top();
+            st.pop();
+            
+            string temp = postfix[i]+op2+op1;
+            st.push(temp);
+        }
+    }
+    string ans ="";
+    while(!st.empty()){
+        ans+=st.top();
+        st.pop();
+    }
+    cout<<"Required Prefix Expression: "<<ans<<endl;
+}
+
+void expevaluation(){
+    cout<<"Choose the type of Expression:\n1.Infix\n2.Prefix\n3.Postfix"<<endl;
+    int c;
+    cin>>c;
+    switch(c){
+        case 1: infixeval();
+        break;
+        case 2: prefixeval();
+        break;
+        case 3: postfixeval();
+        break; 
+        default: cout<<"Please Enter a Valid Option"<<endl;
+        expevaluation();
+    }
+
+}
+void infixeval(){
+    cout<<"Enter Infix Expression:"<<endl;
+    string infix;
+    getline(cin>>ws,infix);
+    stack<int>st;
+    stack<char>ops;
+    int size = infix.size();
+    for(int i=0;i<size;i++){
+        if(infix[i]==' ')continue;
+
+        else if(infix[i]=='('){
+            ops.push(infix[i]);
+        }
+
+        else if(isdigit(infix[i])){
+            int val=0;
+            while(i<size && isdigit(infix[i])){
+                val = (val*10)+(infix[i]-'0');
+                i++;
+            }
+            st.push(val);
+            i--;
+        }
+        else if(infix[i]==')'){
+            while(!ops.empty() && ops.top()!='('){
+                int val1=st.top();
+                st.pop();
+                int val2 = st.top();
+                st.pop();
+
+                char op = ops.top();
+                ops.pop();
+                switch(op){
+                    case '+': st.push(val2 + val1); 
+                    break; 
+                    case '-': st.push(val2 - val1); 
+                    break; 
+                    case '*': st.push(val2 * val1); 
+                    break; 
+                    case '/': st.push(val2/val1); 
+                    break; 
+                }
+            }
+            if(!ops.empty()){
+                ops.pop();
+            }
+        }
+        else{
+            while(!ops.empty() && getPriority(infix[i])<=getPriority(ops.top())){
+                int val1=st.top();
+                st.pop();
+                int val2 = st.top();
+                st.pop();
+
+                char op = ops.top();
+                ops.pop();
+
+                switch(op){
+                    case '+': st.push(val2 + val1); 
+                    break; 
+                    case '-': st.push(val2 - val1); 
+                    break; 
+                    case '*': st.push(val2 * val1); 
+                    break; 
+                    case '/': st.push(val2/val1); 
+                    break; 
+                }
+            }
+            ops.push(infix[i]);
+        }
+    }
+    while(!ops.empty()){
+            int val1=st.top();
+            st.pop();
+            int val2 = st.top();
+            st.pop();
+
+            char op = ops.top();
+                ops.pop();
+
+            switch(op){
+                case '+': st.push(val2 + val1); 
+                break; 
+                case '-': st.push(val2 - val1); 
+                break; 
+                case '*': st.push(val2 * val1); 
+                break; 
+                case '/': st.push(val2/val1); 
+                break; 
+            }
+    }
+    cout<<"Infix Evaluation: "<<st.top()<<endl;
+}
+void prefixeval(){
+    cout<<"Enter Prefix Expression:"<<endl;
+    string prefix;
+    getline(cin>>ws,prefix);
+    stack<int>st;
+    int size=prefix.size();
+    for(int i=size-1;i>=0;i--){
+        if(prefix[i]==' ')continue;
+        else if(isdigit(prefix[i])){
+            int val=0,j=i;
+            while(i<size && isdigit(prefix[i])){
+                 i--;
+            }
+            i++;
+            for(int k=i;k<=j;k++){
+                val=val*10 + (prefix[k]-'0');
+            }
+            st.push(val);
+        }
+        else if(isopr(prefix[i])){
+           int val1=st.top();
+            st.pop();
+            int val2 = st.top();
+            st.pop();
+
+            switch(prefix[i]){
+            case '+': st.push(val2 + val1); 
+            break; 
+            case '-': st.push(val2 - val1); 
+            break; 
+            case '*': st.push(val2 * val1); 
+            break; 
+            case '/': st.push(val2/val1); 
+            break; 
+            } 
+        }
+    }
+    cout<<"Prefix Evaluation: "<<st.top()<<endl;
+}
+void postfixeval(){
+    cout<<"Enter Postfix Expression:"<<endl;
+    string postfix;
+    getline(cin>>ws,postfix);
+    stack<int>st;
+    int size=postfix.length(),i;
+    for(i=0;i<size;++i){
+        if(postfix[i]==' ')continue;
+        else if(isdigit(postfix[i])){
+            int val=0;
+            while(isdigit(postfix[i])){
+                val = val*10 + (postfix[i]-'0');
+                i++;
+            }
+            i--;
+            st.push(val);
+        }
+        else if(isopr(postfix[i])){
+            int val1=st.top();
+            st.pop();
+            int val2 = st.top();
+            st.pop();
+
+            switch(postfix[i]){
+            case '+': st.push(val2+val1); 
+            break; 
+            case '-': st.push(val2-val1); 
+            break; 
+            case '*': st.push(val2*val1); 
+            break;
+            case '/': st.push(val2/val1); 
+            break; 
+            } 
+        }
+    }
+    cout<<"Postfix Evaluation: "<<st.top()<<endl;
 }
