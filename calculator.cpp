@@ -554,7 +554,7 @@ void hextoDecimal(){
 }
 
 void NumConversion(){
-    cout<<"Choose the type of conversion you want to do:\n1. Decimal to Binary\n2. Binary to Decimal\n3. Decimal to Octal\n4. Octal to Decimal"<<endl;
+    cout<<"Choose the type of conversion you want to do:\n1. Decimal to Binary\n2. Binary to Decimal\n3. Decimal to Octal\n4. Octal to Decimal\5. Decimal to Hexa Decimal\n6. Hexa Decimal to Decimal"<<endl;
     int num;
     cin>>num;
     switch(num){
@@ -872,7 +872,7 @@ void expevaluation(){
 
 }
 void infixeval(){
-    cout<<"Enter Infix Expression:"<<endl;
+    cout<<"Enter Infix Expression (with spaces b/w operands and operators):"<<endl;
     string infix;
     getline(cin>>ws,infix);
     stack<int>st;
@@ -965,7 +965,7 @@ void infixeval(){
     cout<<"Infix Evaluation: "<<st.top()<<endl;
 }
 void prefixeval(){
-    cout<<"Enter Prefix Expression:"<<endl;
+    cout<<"Enter Prefix Expression (with spaces b/w operands and operators):"<<endl;
     string prefix;
     getline(cin>>ws,prefix);
     stack<int>st;
@@ -1004,7 +1004,7 @@ void prefixeval(){
     cout<<"Prefix Evaluation: "<<st.top()<<endl;
 }
 void postfixeval(){
-    cout<<"Enter Postfix Expression:"<<endl;
+    cout<<"Enter Postfix Expression (with spaces b/w operands and operators):"<<endl;
     string postfix;
     getline(cin>>ws,postfix);
     stack<int>st;
