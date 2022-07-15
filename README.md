@@ -1,4 +1,4 @@
-# Digital-Calculator
+# Scientific-Calculator
 
 This calculator can perform various tasks such as:
 + Addition
