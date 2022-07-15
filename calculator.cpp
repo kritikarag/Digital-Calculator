@@ -2,6 +2,7 @@
 #include<cstdio>
 #include<iomanip>
 #include<math.h>
+#include<cmath>
 #include<algorithm>
 #include<string>
 #include<bits/stdc++.h>
@@ -391,29 +392,30 @@ void trigo(){
        }
        case 3: {
            float tan_value;
-           tan_value=cos(d);
+           tan_value=tan(d);
            cout<<fixed<<"The value of tan("<<d<<") is: "<<tan_value<<endl;
            break;
        }
        case 4: {
            float  cosec_value;
-            cosec_value=cos(d);
+            cosec_value=1/sin(d);
            cout<<fixed<<"The value of cosec("<<d<<") is: "<< cosec_value<<endl;
            break;
        }
        case 5: {
            float sec_value;
-        sec_value=cos(d);
+        sec_value=1/cos(d);
            cout<<fixed<<"The value of sec("<<d<<") is: "<<sec_value<<endl;
            break;
        }
        case 6: {
            float cot_value;
-           cot_value=cos(d);
+           cot_value=1/tan(d);
            cout<<fixed<<"The value of cot("<<d<<") is: "<< cot_value<<endl;
            break;
        }
        default: cout<<"Invalid Option"<<endl;
+       calculation_operation();
    }
 }
 
