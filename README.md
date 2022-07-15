@@ -24,6 +24,13 @@ This calculator can perform various tasks such as:
     - Secant Function
     - Co-Tangent Function
 + Exponent
++ Number Conversion
+    - Decimal to Binary
+    - Binary to Decimal
+    - Decimal to Octal
+    - Octal to Decimal
+    - Decimal to Hexa Decimal
+    - Hexa Decimal to Decimal
 + Expression Conversion
     - Infix Expression
         * To Prefix Expression
@@ -38,4 +45,3 @@ This calculator can perform various tasks such as:
     - Infix Expression Evaluation
     - Prefix Expression Evaluation
     - Postfix Expression Evaluation
-18.
