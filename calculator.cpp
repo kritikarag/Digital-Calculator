@@ -99,11 +99,11 @@ int main(){
             case 'z': prime();
                     break; 
 			
-			case 'o': trigo();
-			        break;
+	    case 'o': trigo();
+		    break;
 					
-			case 'e': expo();
-			        break;
+	    case 'e': expo();
+		    break;
 
             case 'w': ExpressionConversion();
                     break;
