@@ -42,6 +42,13 @@ void expevaluation();
 void infixeval();
 void prefixeval();
 void postfixeval();
+void NumConversion();
+void bintoDecimal();
+void dectoBinary();
+void dectoOctal();
+void octtoDecimal();
+void hextoDecimal();
+void dectoHexal();
 
 int main(){
     int x=1;
@@ -102,7 +109,10 @@ int main(){
                     break;
 
             case 'v': expevaluation();
-                    break;				           
+                    break;
+
+            case 'b': NumConversion();
+                     break;				           
 							               
             case 'q': exit(0);
                     break;
@@ -144,6 +154,7 @@ cout<<"16. Press 'e' for Exponential"<<endl;
 cout<<"17. Press 'l' for Logarithm"<<endl;
 cout<<"18. Press 'w' for Expression Conversion"<<endl;
 cout<<"19. Press 'v' for Expression Evaluation"<<endl;
+cout<<"20. Press 'b' for Number Conversion"<<endl;
 }
 
 void addition(){
@@ -405,6 +416,161 @@ void expo(){
     cin>>x;
     result=exp(x);
     cout<<fixed<<"Exponential of "<<setprecision(2)<<x<<" is: "<<setprecision(2)<<result<<endl;
+}
+
+void decToBinary()
+{ 
+    cout<<"Enter the number:"<<endl;
+    int num;
+    cin>>num;
+    int N=num;
+    int B_Number = 0;
+    int cnt = 0;
+    while (N != 0) {
+        int rem = N % 2;
+        int c = pow(10, cnt);
+        B_Number += rem * c;
+        N /= 2; 
+        cnt++;
+    } 
+    cout<<"Binary Representatation of "<<num<<" is : "<<B_Number<<endl;
+}
+
+void bintoDecimal(){
+    cout<<"Enter the Binary Number: "<<endl;
+
+    int num;
+    cin>>num;
+    int dec_value = 0; 
+    int base = 1;
+ 
+    int temp = num;
+    while (temp) {
+        int last_digit = temp % 10;
+        temp = temp / 10;
+ 
+        dec_value += last_digit * base;
+ 
+        base = base * 2;
+    }
+ 
+    cout<<"Decimal Representation of "<<num<<" is :"<< dec_value<<endl;
+}
+
+void dectoOctal(){
+    cout<<"Enter Decimal Number:"<<endl;
+    int deciNum;
+    cin>>deciNum;
+    int octalNum = 0, countval = 1;
+    int dNo = deciNum;
+ 
+    while (deciNum != 0) { 
+        int remainder = deciNum % 8; 
+        octalNum += remainder * countval; 
+        countval = countval * 10;
+        deciNum /= 8;
+    }
+    cout <<"Octal Representation of "<<dNo<<" is: "<< octalNum << endl;
+}
+
+void octtoDecimal(){
+    cout<<"Enter Octal Number:"<<endl;
+    int num;
+    cin>>num; 
+    int dec_value = 0;
+  
+    int base = 1;
+ 
+    int temp = num;
+    while (temp) {
+  
+        int last_digit = temp % 10;
+        temp = temp / 10;
+  
+        dec_value += last_digit * base;
+ 
+        base = base * 8;
+    }
+ 
+    cout<<"Decimal Representation of "<<num<<" is: "<< dec_value<<endl;
+}
+
+void dectoHexal(){
+    cout<<"Enter Decimal Number: "<<endl;
+    int n;
+    cin>>n;
+    int num = n;
+
+    char hexaDeciNum[100];
+  
+    int i = 0;
+    while (n != 0) {
+        int temp = 0; 
+        temp = n % 16; 
+        if (temp < 10) {
+            hexaDeciNum[i] = temp + 48;
+            i++;
+        }
+        else {
+            hexaDeciNum[i] = temp + 55;
+            i++;
+        }
+ 
+        n = n / 16;
+    }
+ 
+    cout<<"Hexadecimal Representation of "<<num<<" is: ";
+    for (int j = i - 1; j >= 0; j--)
+        cout << hexaDeciNum[j];
+}
+
+void hextoDecimal(){
+
+    cout<<"Enter Hexa Decimal Value: "<<endl;
+    string hexal;
+    cin>>hexal;
+    string hexVal = hexal;
+    int len = hexVal.size();
+  
+    int base = 1;
+ 
+    int dec_val = 0;
+  
+    for (int i = len - 1; i >= 0; i--) {
+         
+        if (hexVal[i] >= '0' && hexVal[i] <= '9') {
+            dec_val += (int(hexVal[i]) - 48) * base;
+  
+            base = base * 16;
+        } 
+
+        else if (hexVal[i] >= 'A' && hexVal[i] <= 'F') {
+            dec_val += (int(hexVal[i]) - 55) * base;
+  
+            base = base * 16;
+        }
+    }
+    cout<<"Decimal representation of "<<hexal<<" is: "<<dec_val<<endl;;
+}
+
+void NumConversion(){
+    cout<<"Choose the type of conversion you want to do:\n1. Decimal to Binary\n2. Binary to Decimal\n3. Decimal to Octal\n4. Octal to Decimal"<<endl;
+    int num;
+    cin>>num;
+    switch(num){
+        case 1: decToBinary();
+        break;
+        case 2: bintoDecimal();
+        break;
+        case 3: dectoOctal();
+        break;
+        case 4: octtoDecimal();
+        break;
+        case 5: dectoHexal();
+        break;
+        case 6: hextoDecimal();
+        break;
+    }
 }
 
 bool isopr(char x)
