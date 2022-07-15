@@ -72,7 +72,7 @@ int main(){
             case '/':division();
                        break;
             
-            case '?':remainder();
+            case '%':remainder();
                        break;
             
             case '^': power();
@@ -139,7 +139,7 @@ cout<<"1. Press '+' for Addition"<<endl;
 cout<<"2. Press '-' for Subtraction"<<endl;
 cout<<"3. Press '*' for Multiplication"<<endl;
 cout<<"4. Press '/' for Divison"<<endl;
-cout<<"5. Press '?' for Modulus"<<endl;
+cout<<"5. Press '%' for Modulus"<<endl;
 cout<<"6. Press '^' for Power"<<endl;
 cout<<"7. Press '!' for Factorial"<<endl;
 cout<<"8. Press 'x' for Roots"<<endl;
@@ -148,7 +148,7 @@ cout<<"10. Press 'f' for Fibonacci"<<endl;
 cout<<"11. Press 'p' for Palindrome number"<<endl;
 cout<<"12. Press 't' for Strong verification"<<endl;
 cout<<"13. Press 'a' for Armstrong number"<<endl;
-cout<<"14. Press 'z' for Armstrong verification"<<endl;
+cout<<"14. Press 'z' for Prime Number verification"<<endl;
 cout<<"15. Press 'o' for Trignometric function"<<endl;
 cout<<"16. Press 'e' for Exponential"<<endl;
 cout<<"17. Press 'l' for Logarithm"<<endl;
@@ -171,9 +171,9 @@ void addition(){
 }
 
 void subtraction(){
-    int a,b,c=0;
+    int a,b,c;
     cout<<"Enter 2 numbers: "<<endl;
-    cin>>a,b;
+    cin>>a>>b;
     c=a-b;
     cout<<a<<"-"<<b<<"="<<c<<endl;
 }
@@ -182,7 +182,7 @@ void multiplication(){
     int n,product=1,k=1,x;
     cout<<"Enter the number of elements you want to multiply: "<<endl;
     cin>>n;
-    cout<<"Enter "<<n<<"numbers one by one: "<<endl;
+    cout<<"Enter "<<n<<" numbers one by one: "<<endl;
     while(k<=n){
         cin>>x;
         product*=x;
@@ -285,7 +285,7 @@ void fibonacci(){
     cout<<"Enter no. of terms of Fibonacci series: ";
     cin>>n;
     for(int i=1;i<=n;i++){
-        cout<<a;
+        cout<<a<<" ";
         c=a+b;
         a=b;
         b=c;
@@ -293,19 +293,26 @@ void fibonacci(){
 }
 
 void palindrome(){
-    int n,r,temp,sum=0;
-    cout<<"Enter a number to check whether it is Palindrome or not: ";
-    cin>>n;
-    temp=n;
-    while(n>0){
-        r=n%10;
-        sum=sum*10+r;
-        n/=10;
-    }
-    if(sum=temp)
-    cout<<"The given number is Palindrome"<<endl;
-    else
-    cout<<"The given number is not Palindrome"<<endl;
+    int n, num, digit, rev = 0;
+
+     cout << "Enter a positive number: ";
+     cin >> num;
+
+     n = num;
+
+     do
+     {
+        digit = num % 10;
+        rev = (rev * 10) + digit;
+        num = num / 10;
+     } while (num != 0);
+
+     cout << " The reverse of the number is: " << rev << endl;
+
+     if (n == rev)
+         cout << " The number is a palindrome.";
+     else
+         cout << " The number is not a palindrome.";
 }
 
 void strong(){
